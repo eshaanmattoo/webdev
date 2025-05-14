@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FORMS</title>
+    <style>
+        div{
+            width: 80%;
+            background-color: bisque;
+            margin: auto;
+            border: solid 2px black;
+        }
+        h1,h2,h3{
+            text-align: center;
+        }
+        input:hover{
+            font-size: medium;
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Learnign about forms</h1>
+        <h2>Text type form</h2>
+        <form action="actionpage" autocomplete="on" novalidate>
+            <label for="firstname">Enter your firstname:</label>
+            <input type="text" id="firstname" name="firstname" placeholder="Enter your firstname" value="Eshaan"><br><br>
+            <label for="Lastname">Enter your lastname:</label>
+            <input type="text" id="Lastname" name="Lastname" placeholder="Enter your lastname"><br><br>
+            <label for="Email">Enter your email</label>
+            <input type="text" id="Email" name="Email" type="email">
+
+            <h1>Radio type form</h1>
+            <h3>Enter your GENDER</h3>
+            <input type="radio" id="male" name="gender">
+            <label for="male">Male</label><br>
+
+            <input type="radio" id="female" name="gender">
+            <label for="female">Female</label>
+
+
+            <h2>Check box type of Form</h2>
+            <input type="checkbox" id="course" name="course">
+            <label for="course">mathematics</label><br>
+            <input type="checkbox" id="course" name="course">
+            <label for="course">chemistry</label><br>
+            <input type="checkbox" id="course" name="course">
+            <label for="course">physics</label>
+
+
+            <h2>Dropdown Menu</h2>
+
+            <label for="fruits">Select a fruit of your choice</label><br>
+            <select name="fruits" id="fruits" size="2" multiple>
+                <option value="Mango">Mango</option>
+                <option value="Banana" selected>Banana</option>
+                <option value="Apple">Apple</option>
+            </select><br><br>
+
+            <textarea name="info" id="info" rows="20" cols="50">Read carefully before submitting forms</textarea><br><br>
+            
+            <input type="submit" >
+            
+        </form>
+    </div>
+</body>
+</html>
+
+
