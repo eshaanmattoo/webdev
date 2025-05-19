@@ -1,0 +1,60 @@
+td {
+  width: 80px;
+  height: 80px;
+  text-align: center;
+   border: 0.5px solid black; 
+   border-radius: 10px;
+   /* border-style: none; */
+   border-color: black;
+
+}
+h1:hover{
+  background-color: black;
+}
+td:hover{
+  scale: 1.2;
+}
+table{
+  /* border-collapse: collapse; */
+  border-radius: 10px;
+}
+
+h1{
+  background-color: greenyellow;
+ 
+  flex: auto;
+  font-weight: bold;
+  line-height: 100px;
+  text-align: center;
+  border-radius: 20px;
+  
+}
+
+.color_green {
+  background-color: green;
+}
+.color_red{
+  background-color: red;
+}
+
+.color_yellow {
+  background-color: yellow;
+}
+.color_orange{
+  background-color: orange;
+}
+.color_sky {
+  background-color: skyblue;
+}
+.color_purple{
+  background-color: purple;
+}
+.color_pink{
+  background-color: pink;
+}
+.color_gray{
+  background-color: gray;
+}
+.color_blue{
+  background-color: dodgerblue;
+}
