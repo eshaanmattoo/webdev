@@ -4,11 +4,17 @@ const http = require("http");
 // Import the built-in 'fs' module to handle file operations (like reading/writing logs)
 const fs = require("fs");
 
+//Import the url module
+const url = require("url");
+
+
 // Create an HTTP server
 const myserver = http.createServer((req, res) => {
+  if(req.url === '/favicon.ico') return res.end();// dont print the /favicon.ico on log 
   // Create a log entry with the current timestamp and requested URL
   const log = `${Date.now()}: ${req.url}: New request received\n`;
-
+  const myUrl = url.parse(req.url, true);
+  console.log(myUrl);
   // Append the log entry to a file named 'log.txt'
   fs.appendFile("log.txt", log, (err) => {
     // Check for errors while writing the log file
@@ -19,13 +25,14 @@ const myserver = http.createServer((req, res) => {
     }
 
     // Based on the requested URL, send different responses
-    switch (req.url) {
+    switch (myUrl.pathname) {
       case '/':
         res.end("hello this is the home page");
         break;
 
       case '/about':
-        res.end("my name is eshaan mattoo");
+        const username = myUrl.query.myname;
+        res.end(`Hi ${username}`);
         break;
 
       default:
