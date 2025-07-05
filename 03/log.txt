@@ -12,3 +12,7 @@
 1751435014138: /about?myname=piyushbansal&userID=1&search=dog: New request received
 1751435028283: /about?myname=piyushbansal&userID=1&search=dog: New request received
 1751435119690: /about?myname=john&userID=1&search=dog: New request received
+1751437135213:GET :/about?myname=john&userID=1&search=dog: New request received
+1751438001544:GET :/signup: New request received
+1751438088673:GET :/signup: New request received
+1751438103764:GET :/signup: New request received
