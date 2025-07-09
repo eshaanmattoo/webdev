@@ -7,11 +7,32 @@ const PORT = 8000;
 //middleware
 app.use(express.urlencoded({ extended: false}));
 
+//this middleware stops a request from going further 
+// app.use((req,res,next)=>{
+//   console.log("hello from middleware 1");
+//   req.MyName = "eshaanmattoo" ;
+//   // return res.json({msg : "hello from middleware 1"});//this would have stopped the middleware from sending the req further
+//   next();
+// });
 
+// app.use((req,res,next)=>{
+//   console.log("hello from middleware 2, ", req.MyName);
+//   // return res.end("hey");
+//   next();
+// });
 
-
-
-
+app.use((req,res , next)=>{
+  fs.appendFile('log.txt',`\n ${Date.now()}: ${req.ip} : ${req.method} : ${req.path}`, (err,  data) => {
+    next();
+    
+  });
+});
+//for headers...
+app.get('/api/users', (req,res) => {
+  console.log(req.headers);
+  res.setHeader("X-Myname", "eshaanmattoo");//add x before header to show that it is a custom header
+  return res.json(users);
+});
 // routes: ....
 app.get('/users', (req,res) =>{
   const html = `
@@ -25,7 +46,7 @@ app.get('/users', (req,res) =>{
 
 app.get('/api/users', (req,res) => {
   return res.json(users);
-});
+}); 
 
 //rest api points
 /*
@@ -88,6 +109,7 @@ app.post('/api/users', (req,res) => {
   });
    
 });
+
 
 
 app.listen(PORT, () => console.log("server started")); 
