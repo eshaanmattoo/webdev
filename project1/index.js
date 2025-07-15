@@ -1,5 +1,5 @@
 const express = require("express");
-const users = require("./MOCK_DATA.json");
+// const users = require("./MOCK_DATA.json");
 const mongoose = require("mongoose");
 const app = express();
 const fs = require("fs");
@@ -68,16 +68,19 @@ app.use((req, res, next) => {
   );
 });
 //for headers...
-app.get("/api/users", (req, res) => {
+app.get("/api/users", async(req, res) => {
   console.log(req.headers);
   res.setHeader("X-Myname", "eshaanmattoo"); //add x before header to show that it is a custom header
-  return res.json(users);
+  const allDbUsers = await User.find({})
+
+  return res.json(allDbUsers);
 });
 // routes: ....
-app.get("/users", (req, res) => {
+app.get("/users", async (req, res) => {
+  const allDbUsers = await User.find({})
   const html = `
   <ul>
-      ${users.map((user) => `<li>${user.first_name}</li>`).join("")}
+      ${allDbUsers.map((user) => `<li>${user.firstName} -${user.email}</li>`).join("")}
   </ul>
   `;
   res.send(html);
@@ -122,7 +125,7 @@ app.get("/", (req, res) => {
 //group all methods where the route is same
 app
   .route("/api/users/:id")
-  .get((req, res) => {
+  .get(async (req, res) => {
     const id = Number(req.params.id);
     const user = users.find((user) => user.id === id);
     if (!user) return res.status(404).json({ error: "user not found" });
