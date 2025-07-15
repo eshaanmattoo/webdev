@@ -15,3 +15,15 @@
  1752071620198: ::1 : GET : /api/users
  1752071713889: ::1 : GET : /api/users
  1752071846776: ::1 : GET : /api/users
+ 1752072810716: ::1 : POST : /api/users
+ 1752072819946: ::1 : POST : /api/users
+ 1752073146617: ::1 : POST : /api/users
+ 1752073325852: ::1 : POST : /api/users
+ 1752073746314: ::1 : POST : /api/users
+ 1752073783575: ::1 : POST : /api/users
+ 1752073932603: ::1 : POST : /api/userss
+ 1752075919050: ::1 : GET : /api/users/1001
+ 1752075922981: ::1 : GET : /api/users/20202
+ 1752075930831: ::1 : GET : /api/users/1
+ 1752572826457: ::1 : POST : /api/users
+ 1752572963696: ::1 : POST : /api/users

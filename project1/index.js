@@ -1,13 +1,50 @@
 const express = require("express");
 const users = require("./MOCK_DATA.json");
+const mongoose = require("mongoose");
 const app = express();
 const fs = require("fs");
+const { error } = require("console");
+const { type } = require("os");
 const PORT = 8000;
 
-//middleware
-app.use(express.urlencoded({ extended: false}));
+//connect to the mongoose database first
+mongoose
+  .connect("mongodb://127.0.0.1:27017/youtube-app-1")
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.log("mongo error: ", err));
+//schema for database
 
-//this middleware stops a request from going further 
+const userSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    jobTitle: {
+      type: String,
+    },
+    gender: {
+      type: String,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const User = mongoose.model("User", userSchema);
+//middleware
+app.use(express.urlencoded({ extended: false }));
+
+//this middleware stops a request from going further
 // app.use((req,res,next)=>{
 //   console.log("hello from middleware 1");
 //   req.MyName = "eshaanmattoo" ;
@@ -21,20 +58,23 @@ app.use(express.urlencoded({ extended: false}));
 //   next();
 // });
 
-app.use((req,res , next)=>{
-  fs.appendFile('log.txt',`\n ${Date.now()}: ${req.ip} : ${req.method} : ${req.path}`, (err,  data) => {
-    next();
-    
-  });
+app.use((req, res, next) => {
+  fs.appendFile(
+    "log.txt",
+    `\n ${Date.now()}: ${req.ip} : ${req.method} : ${req.path}`,
+    (err, data) => {
+      next();
+    }
+  );
 });
 //for headers...
-app.get('/api/users', (req,res) => {
+app.get("/api/users", (req, res) => {
   console.log(req.headers);
-  res.setHeader("X-Myname", "eshaanmattoo");//add x before header to show that it is a custom header
+  res.setHeader("X-Myname", "eshaanmattoo"); //add x before header to show that it is a custom header
   return res.json(users);
 });
 // routes: ....
-app.get('/users', (req,res) =>{
+app.get("/users", (req, res) => {
   const html = `
   <ul>
       ${users.map((user) => `<li>${user.first_name}</li>`).join("")}
@@ -43,10 +83,9 @@ app.get('/users', (req,res) =>{
   res.send(html);
 });
 
-
-app.get('/api/users', (req,res) => {
+app.get("/api/users", (req, res) => {
   return res.json(users);
-}); 
+});
 
 //rest api points
 /*
@@ -72,44 +111,61 @@ app.delete('/api/users/:id', (req,res) => {
   return res.json({status: "pending"});
 });
 */
-app.get("/",(req,res)=>{
+app.get("/", (req, res) => {
   const html = `
     <a href="api/users">users</a><br>
     <a href="/users">users in html list</a><br>
     
   `;
-  res.send(html)}
-);
+  res.send(html);
+});
 //group all methods where the route is same
-app.route("/api/users/:id").get((req,res)=>{
+app
+  .route("/api/users/:id")
+  .get((req, res) => {
     const id = Number(req.params.id);
     const user = users.find((user) => user.id === id);
+    if (!user) return res.status(404).json({ error: "user not found" });
     return res.json(user);
-}).patch((req,res)=>{
-  // will implement further: edit the user with id
-  // const id = Number(req.params.id);
-  // const body = req.body;
+  })
+  .patch((req, res) => {
+    // will implement further: edit the user with id
+    // const id = Number(req.params.id);
+    // const body = req.body;
 
-  return res.json({status: "pending"});
-}).delete((req,res)=>{
+    return res.json({ status: "pending" });
+  })
+  .delete((req, res) => {
     // will implement further: delete user with id
-  return res.json({status: "pending"});
-})
-
-
-
-
-app.post('/api/users', (req,res) => {
-  // will implement further: create new user
-  const body = req.body;  
-  console.log("body", body);
-  users.push({...body, id: users.length+1});
-  fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err, data) =>{
-    return res.json({status: "success", id : users.length});
+    return res.json({ status: "pending" });
   });
-   
+
+app.post("/api/users", async (req, res) => {
+  // will implement further: create new user
+  const body = req.body;
+  console.log("body", body);
+  if (
+    !body ||
+    !body.first_name ||
+    !body.last_name ||
+    !body.email ||
+    !body.gender ||
+    !body.job_title
+  ) {
+    return res.status(400).json({ message: "all fields are required" });
+  }
+  // users.push({ ...body, id: users.length + 1 });
+  // fs.writeFile("./MOCK_DATA.json", JSON.stringify(users), (err, data) => {
+  //   return res.status(201).json({ status: "success", id: users.length });
+  // });
+  const result = await User.create({
+    firstName: body.first_name,
+    lastName: body.last_name,
+    email: body.email,
+    gender: body.gender,
+    jobTitle: body.job_title,
+  });
+  return res.status(201).json({ msg: "success" });
 });
 
-
-
-app.listen(PORT, () => console.log("server started")); 
+app.listen(PORT, () => console.log("server started"));
