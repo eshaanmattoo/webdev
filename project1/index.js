@@ -125,22 +125,23 @@ app.get("/", (req, res) => {
 //group all methods where the route is same
 app
   .route("/api/users/:id")
-  .get(async (req, res) => {
-    const id = Number(req.params.id);
-    const user = users.find((user) => user.id === id);
+   .get(async (req, res) => {
+    const user = await User.findById(req.params.id)
     if (!user) return res.status(404).json({ error: "user not found" });
     return res.json(user);
   })
-  .patch((req, res) => {
-    // will implement further: edit the user with id
+  .patch(async(req, res) => {
+    
     // const id = Number(req.params.id);
     // const body = req.body;
+    await User.findByIdAndUpdate(req.params.id,{lastName: "changed"}); //the "changed" data will come from the frontend 
 
-    return res.json({ status: "pending" });
+    return res.status(201).res.json({ status: "success" });
   })
-  .delete((req, res) => {
-    // will implement further: delete user with id
-    return res.json({ status: "pending" });
+  .delete(async(req, res) => {
+    await User.findByIdAndDelete(req.params.id);
+
+    return res.status(201).json({ status: "success" });
   });
 
 app.post("/api/users", async (req, res) => {

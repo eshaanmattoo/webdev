@@ -45,3 +45,17 @@
  1752575155612: ::1 : GET : /api/users
  1752575180240: ::1 : GET : /api/users
  1752575308836: ::1 : GET : /api/users
+ 1752644565678: ::1 : GET : /api/users
+ 1752644576520: ::1 : GET : /api/users/68762c6531caba49ef7b672c
+ 1752644812643: ::1 : GET : /api/users
+ 1752644834529: ::1 : PATCH : /api/users/68762c6531caba49ef7b672c
+ 1752644859405: ::1 : PATCH : /api/users/68762c6531caba49ef7b672c
+ 1752644867209: ::1 : GET : /api/users/68762c6531caba49ef7b672c
+ 1752645089699: ::1 : DELETE : /api/users/68762c6531caba49ef7b672c
+ 1752645119204: ::1 : GET : /api/users/68762c6531caba49ef7b672c
+ 1752645135542: ::1 : GET : /api/users
+ 1752645146130: ::1 : DELETE : /api/users/6876242302c4d40fb78466bc
+ 1752645192796: ::1 : POST : /api/users
+ 1752645198301: ::1 : GET : /api/users
+ 1752645213935: ::1 : DELETE : /api/users/68773e48d5fd9031870461e3
+ 1752645217005: ::1 : GET : /api/users
